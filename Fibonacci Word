@@ -1,0 +1,46 @@
+#Generates the k:th character of the infinite Fibonacci word.
+
+def fibonacci_sum(n):
+    return list(sum_gen(n))
+
+def feb_gen(limit):
+    prior, next = 0, 1
+
+    while next <= limit:
+        prior, next = next, next + prior
+
+    while prior:
+        yield prior
+        prior, next = next - prior, prior
+
+def sum_gen(num):
+    fibs = feb_gen(num)
+
+    for fib in fibs:
+        if fib <= num:
+            num -= fib
+            yield fib
+
+def make_word(k):
+    s1='0'
+    s2='01'
+    temp=''
+    if k<2:
+        return '0'
+    else:
+        while len(s2)<k:
+            temp=s2
+            s2+=s1
+            s1=temp
+    return s2[-1]
+
+def fibonacci_word(n):
+    return make_word((fibonacci_sum(n+1))[-1])
+
+
+    
+# example
+print(fibonacci_word(10**10000))
+
+#output
+'0'
